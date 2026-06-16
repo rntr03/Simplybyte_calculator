@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bus Ticket Booking - Login</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-container{
+    background:white;
+    width:350px;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#007bff;
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.register-link{
+    text-align:center;
+    margin-top:15px;
+}
+
+.register-link a{
+    color:#007bff;
+    text-decoration:none;
+}
+</style>
+
+</head>
+<body>
+
+<div class="login-container">
+
+    <h2>🚌 Bus Ticket Booking</h2>
+
+    <form>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" placeholder="Enter Email" required>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="Enter Password" required>
+        </div>
+
+        <button type="submit">Login</button>
+
+        <div class="register-link">
+            Don't have an account?
+            <a href="#">Register</a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
