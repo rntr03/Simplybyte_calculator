@@ -1,110 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simple Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .calculator {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    #result {
-      width: 100%;
-      height: 50px;
-      font-size: 1.5rem;
-      text-align: right;
-      padding-right: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 60px);
-      gap: 10px;
-    }
-    .buttons button {
-      height: 60px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 6px;
-      background: #e0e0e0;
-      cursor: pointer;
-    }
-    .buttons button.operator {
-      background: #ff9800;
-      color: white;
-    }
-    .buttons button.equal {
-      background: #4caf50;
-      color: white;
-      grid-column: span 2;
-    }
-    .buttons button.clear {
-      background: #f44336;
-      color: white;
-      grid-column: span 2;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Calculator - Ramireddy Sir</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:linear-gradient(
+        -45deg,
+        #667eea,
+        #764ba2,
+        #ff6b6b,
+        #feca57,
+        #00c9ff
+    );
+    background-size:400% 400%;
+    animation:gradientBG 10s ease infinite;
+}
+
+@keyframes gradientBG{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.calculator{
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.owner-name{
+    text-align:center;
+    color:white;
+    margin-bottom:15px;
+    font-size:1.6rem;
+    font-weight:bold;
+    letter-spacing:1px;
+    text-shadow:0 2px 8px rgba(0,0,0,0.4);
+}
+
+#result{
+    width:100%;
+    height:80px;
+    border:none;
+    border-radius:15px;
+    margin-bottom:20px;
+    font-size:2rem;
+    text-align:right;
+    padding:15px;
+    background:rgba(255,255,255,0.2);
+    color:white;
+    outline:none;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,80px);
+    gap:12px;
+}
+
+button{
+    height:70px;
+    border:none;
+    border-radius:15px;
+    font-size:1.3rem;
+    font-weight:bold;
+    color:white;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+button:hover{
+    transform:translateY(-4px);
+    box-shadow:0 6px 15px rgba(0,0,0,0.3);
+}
+
+button:active{
+    transform:scale(0.95);
+}
+
+.number{
+    background:linear-gradient(135deg,#6a11cb,#2575fc);
+}
+
+.operator{
+    background:linear-gradient(135deg,#ff9966,#ff5e62);
+}
+
+.equal{
+    background:linear-gradient(135deg,#00c853,#64dd17);
+}
+
+.clear{
+    background:linear-gradient(135deg,#ff1744,#d50000);
+}
+
+.backspace{
+    background:linear-gradient(135deg,#00bcd4,#2196f3);
+}
+
+.footer-text{
+    text-align:center;
+    color:white;
+    margin-top:15px;
+    font-size:1rem;
+    font-weight:600;
+    letter-spacing:1px;
+    text-shadow:0 2px 8px rgba(0,0,0,0.4);
+}
+</style>
 </head>
+
 <body>
 
-  <div class="calculator">
-    <input type="text" id="result" disabled />
+<div class="calculator">
+
+    <h2 class="owner-name">Ramireddy Sir</h2>
+
+    <input type="text" id="result" readonly>
+
     <div class="buttons">
-      <button onclick="appendValue('7')">7</button>
-      <button onclick="appendValue('8')">8</button>
-      <button onclick="appendValue('9')">9</button>
-      <button class="operator" onclick="appendValue('/')">÷</button>
 
-      <button onclick="appendValue('4')">4</button>
-      <button onclick="appendValue('5')">5</button>
-      <button onclick="appendValue('6')">6</button>
-      <button class="operator" onclick="appendValue('*')">×</button>
+        <button class="clear" onclick="clearResult()">C</button>
+        <button class="backspace" onclick="backspace()">⌫</button>
+        <button class="operator" onclick="appendValue('%')">%</button>
+        <button class="operator" onclick="appendValue('/')">÷</button>
 
-      <button onclick="appendValue('1')">1</button>
-      <button onclick="appendValue('2')">2</button>
-      <button onclick="appendValue('3')">3</button>
-      <button class="operator" onclick="appendValue('-')">−</button>
+        <button class="number" onclick="appendValue('7')">7</button>
+        <button class="number" onclick="appendValue('8')">8</button>
+        <button class="number" onclick="appendValue('9')">9</button>
+        <button class="operator" onclick="appendValue('*')">×</button>
 
-      <button onclick="appendValue('0')">0</button>
-      <button onclick="appendValue('.')">.</button>
-      <button class="equal" onclick="calculate()">=</button>
-      <button class="operator" onclick="appendValue('+')">+</button>
+        <button class="number" onclick="appendValue('4')">4</button>
+        <button class="number" onclick="appendValue('5')">5</button>
+        <button class="number" onclick="appendValue('6')">6</button>
+        <button class="operator" onclick="appendValue('-')">−</button>
 
-      <button class="clear" onclick="clearResult()">C</button>
+        <button class="number" onclick="appendValue('1')">1</button>
+        <button class="number" onclick="appendValue('2')">2</button>
+        <button class="number" onclick="appendValue('3')">3</button>
+        <button class="operator" onclick="appendValue('+')">+</button>
+
+        <button class="number" onclick="appendValue('0')">0</button>
+        <button class="number" onclick="appendValue('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+
     </div>
-  </div>
 
-  <script>
-    const result = document.getElementById('result');
+    <p class="footer-text">Guided by Ramireddy Sir</p>
 
-    function appendValue(val) {
-      result.value += val;
-    }
+</div>
 
-    function calculate() {
-      try {
+<script>
+const result = document.getElementById("result");
+
+function appendValue(value){
+    result.value += value;
+}
+
+function clearResult(){
+    result.value = "";
+}
+
+function backspace(){
+    result.value = result.value.slice(0,-1);
+}
+
+function calculate(){
+    try{
         result.value = eval(result.value);
-      } catch {
+    }
+    catch{
         result.value = "Error";
-      }
+    }
+}
+
+document.addEventListener("keydown",function(event){
+
+    const key = event.key;
+
+    if(!isNaN(key) || ['+','-','*','/','.','%'].includes(key)){
+        appendValue(key);
     }
 
-    function clearResult() {
-      result.value = '';
+    if(key === "Enter"){
+        calculate();
     }
-  </script>
+
+    if(key === "Backspace"){
+        backspace();
+    }
+
+    if(key === "Escape"){
+        clearResult();
+    }
+});
+</script>
 
 </body>
-</html>
+</html>git add .
+git commit -m "Updated calculator owner name to Ramireddy Sir"
+git push origin main
