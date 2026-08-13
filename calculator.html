@@ -50,6 +50,10 @@
       color: white;
       grid-column: span 2;
     }
+    .buttons button.backspace {
+      background: #607d8b;
+      color: white;
+    }
     .buttons button.clear {
       background: #f44336;
       color: white;
@@ -83,6 +87,7 @@
       <button class="operator" onclick="appendValue('+')">+</button>
 
       <button class="clear" onclick="clearResult()">C</button>
+      <button class="backspace" onclick="backspace()">⌫</button>
     </div>
   </div>
 
@@ -103,6 +108,9 @@
 
     function clearResult() {
       result.value = '';
+    }
+    function backspace() {
+      result.value = result.value.slice(0, -1);
     }
   </script>
 
