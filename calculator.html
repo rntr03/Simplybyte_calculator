@@ -81,14 +81,21 @@
       <button onclick="appendValue('.')">.</button>
       <button class="equal" onclick="calculate()">=</button>
       <button class="operator" onclick="appendValue('+')">+</button>
-
+      <button onclick="calculatePercentage()">%</button>
       <button class="clear" onclick="clearResult()">C</button>
     </div>
   </div>
 
   <script>
     const result = document.getElementById('result');
-
+// Converts the entered number into a percentage value
+function calculatePercentage() {
+  try {
+    result.value = parseFloat(result.value) / 100;
+  } catch {
+    result.value = "Error";
+  }
+}
     function appendValue(val) {
       result.value += val;
     }
@@ -100,7 +107,13 @@
         result.value = "Error";
       }
     }
-
+    function calculatePercentage() {
+  try {
+    result.value = parseFloat(result.value) / 100;
+  } catch {
+    result.value = "Error";
+  }
+}
     function clearResult() {
       result.value = '';
     }
