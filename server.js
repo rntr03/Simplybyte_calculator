@@ -9,7 +9,7 @@ http
     const filePath = path.join(__dirname, "calculator.html");
 
     fs.readFile(filePath, (err, content) => {
-      if (err) {
+      if (error) {
         res.writeHead(500);
         res.end("Server Error");
       } else {
