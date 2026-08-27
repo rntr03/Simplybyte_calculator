@@ -1,0 +1,33 @@
+name: Simplybyte Calculator CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t simplybyte-calculator .
+
+      - name: Run Docker container
+        run: docker run -d --name calculator-test -p 5000:5000 simplybyte-calculator
+
+      - name: Wait for application
+        run: sleep 5
+
+      - name: Test application
+        run: curl --fail http://localhost:5000
+
+      - name: Stop Docker container
+        if: always()
+        run: docker stop calculator-test || true
