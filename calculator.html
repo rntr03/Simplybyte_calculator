@@ -1,109 +1,241 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simple Calculator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimplyByte Calculator</title>
+
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-    }
-    .calculator {
-      background: white;
+      background: linear-gradient(135deg, #141e30, #243b55);
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
+    .calculator {
+      width: 350px;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.10);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    h2 {
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
     #result {
       width: 100%;
-      height: 50px;
-      font-size: 1.5rem;
+      height: 75px;
+      border: none;
+      outline: none;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 2rem;
       text-align: right;
-      padding-right: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 18px;
     }
+
     .buttons {
       display: grid;
-      grid-template-columns: repeat(4, 60px);
-      gap: 10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
     }
+
     .buttons button {
-      height: 60px;
-      font-size: 1.2rem;
+      height: 62px;
+      font-size: 1.3rem;
+      font-weight: bold;
       border: none;
-      border-radius: 6px;
-      background: #e0e0e0;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
       cursor: pointer;
+      transition: 0.2s;
     }
+
+    .buttons button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .buttons button:active {
+      transform: scale(0.95);
+    }
+
     .buttons button.operator {
       background: #ff9800;
       color: white;
     }
+
+    .buttons button.operator:hover {
+      background: #ffb52e;
+    }
+
     .buttons button.equal {
-      background: #4caf50;
-      color: white;
+      background: #00b894;
       grid-column: span 2;
     }
+
     .buttons button.clear {
-      background: #f44336;
-      color: white;
+      background: #e74c3c;
       grid-column: span 2;
+    }
+
+    .buttons button.special {
+      background: #526b91;
+    }
+
+    .footer {
+      color: #bdc9d9;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 400px) {
+      .calculator {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .buttons {
+        gap: 8px;
+      }
+
+      .buttons button {
+        height: 58px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <div class="calculator">
-    <input type="text" id="result" disabled />
+
+    <h2>SIMPLYBYTE</h2>
+
+    <input type="text" id="result"
+           placeholder="0" disabled>
+
     <div class="buttons">
+
+      <button class="clear" onclick="clearResult()">AC</button>
+      <button class="special" onclick="deleteLast()">DEL</button>
+      <button class="operator" onclick="appendValue('/')">÷</button>
+
       <button onclick="appendValue('7')">7</button>
       <button onclick="appendValue('8')">8</button>
       <button onclick="appendValue('9')">9</button>
-      <button class="operator" onclick="appendValue('/')">÷</button>
+      <button class="operator" onclick="appendValue('*')">×</button>
 
       <button onclick="appendValue('4')">4</button>
       <button onclick="appendValue('5')">5</button>
       <button onclick="appendValue('6')">6</button>
-      <button class="operator" onclick="appendValue('*')">×</button>
+      <button class="operator" onclick="appendValue('-')">−</button>
 
       <button onclick="appendValue('1')">1</button>
       <button onclick="appendValue('2')">2</button>
       <button onclick="appendValue('3')">3</button>
-      <button class="operator" onclick="appendValue('-')">−</button>
+      <button class="operator" onclick="appendValue('+')">+</button>
 
       <button onclick="appendValue('0')">0</button>
       <button onclick="appendValue('.')">.</button>
       <button class="equal" onclick="calculate()">=</button>
-      <button class="operator" onclick="appendValue('+')">+</button>
 
-      <button class="clear" onclick="clearResult()">C</button>
     </div>
+
+    <div class="footer">
+      Designed by SimplyByte
+    </div>
+
   </div>
 
   <script>
-    const result = document.getElementById('result');
+
+    const result = document.getElementById("result");
 
     function appendValue(val) {
+      if (result.value === "Error") {
+        result.value = "";
+      }
+
       result.value += val;
     }
 
     function calculate() {
       try {
-        result.value = eval(result.value);
+        const expression = result.value;
+
+        if (!expression || !/^[0-9+\-*/.() ]+$/.test(expression)) {
+          throw new Error("Invalid expression");
+        }
+
+        const answer = eval(expression);
+
+        if (!Number.isFinite(answer)) {
+          throw new Error("Invalid calculation");
+        }
+
+        result.value = Number(answer.toFixed(10)).toString();
+
       } catch {
         result.value = "Error";
       }
     }
 
     function clearResult() {
-      result.value = '';
+      result.value = "";
     }
+
+    function deleteLast() {
+      if (result.value === "Error") {
+        result.value = "";
+      } else {
+        result.value = result.value.slice(0, -1);
+      }
+    }
+
+    // Keyboard support
+    document.addEventListener("keydown", function(event) {
+
+      if (/^[0-9+\-*/.]$/.test(event.key)) {
+        appendValue(event.key);
+      }
+
+      else if (event.key === "Enter" || event.key === "=") {
+        calculate();
+      }
+
+      else if (event.key === "Backspace") {
+        deleteLast();
+      }
+
+      else if (event.key === "Escape") {
+        clearResult();
+      }
+
+    });
+
   </script>
 
 </body>
