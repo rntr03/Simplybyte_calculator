@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simple Calculator</title>
+  <title>Improved Simple Calculator</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,12 +15,19 @@
       align-items: center;
       height: 100vh;
     }
+
     .calculator {
       background: white;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
     #result {
       width: 100%;
       height: 50px;
@@ -27,12 +36,15 @@
       padding-right: 10px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
+      box-sizing: border-box;
     }
+
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 60px);
       gap: 10px;
     }
+
     .buttons button {
       height: 60px;
       font-size: 1.2rem;
@@ -41,15 +53,22 @@
       background: #e0e0e0;
       cursor: pointer;
     }
+
+    .buttons button:hover {
+      background: #bdbdbd;
+    }
+
     .buttons button.operator {
       background: #ff9800;
       color: white;
     }
+
     .buttons button.equal {
       background: #4caf50;
       color: white;
       grid-column: span 2;
     }
+
     .buttons button.clear {
       background: #f44336;
       color: white;
@@ -57,10 +76,15 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="calculator">
+
+    <h2>My Improved Calculator</h2>
+
     <input type="text" id="result" disabled />
+
     <div class="buttons">
       <button onclick="appendValue('7')">7</button>
       <button onclick="appendValue('8')">8</button>
@@ -84,18 +108,36 @@
 
       <button class="clear" onclick="clearResult()">C</button>
     </div>
+
   </div>
 
   <script>
     const result = document.getElementById('result');
 
     function appendValue(val) {
+      if (result.value === "Error") {
+        result.value = "";
+      }
       result.value += val;
     }
 
     function calculate() {
       try {
-        result.value = eval(result.value);
+        if (result.value.trim() === "") return;
+
+        const expression = result.value;
+
+        if (!/^[0-9+\-*/.() ]+$/.test(expression)) {
+          throw new Error("Invalid expression");
+        }
+
+        const answer = eval(expression);
+
+        if (!Number.isFinite(answer)) {
+          throw new Error("Invalid calculation");
+        }
+
+        result.value = answer;
       } catch {
         result.value = "Error";
       }
